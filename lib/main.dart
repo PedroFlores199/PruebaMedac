@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
-import 'Pantallas/inicio.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'pantallas/productos.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print("Firebase inicializado correctamente");
+  } catch (e) {
+    print("Error al inicializar Firebase: $e");
+  }
   runApp(MyApp());
 }
 
@@ -11,12 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mi Aplicación',
+      title: 'Gestión de Productos',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
       ),
-      home: InicioScreen(),
+      home: ProductosScreen(),
     );
   }
 }
