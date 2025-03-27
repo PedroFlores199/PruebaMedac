@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Pantallas/inicio.dart';
+import 'Pantallas/inicio.dart'; 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -19,10 +19,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mi Aplicación',
       theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        primarySwatch: Colors.blue,  
+        fontFamily: 'SF Pro Display',  
       ),
-      home: InicioScreen(),
+      home: InicioScreen(), 
     );
   }
 }
+
+
