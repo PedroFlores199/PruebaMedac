@@ -3,7 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'providers/prod_provider.dart';
-import 'screens/productos_screen.dart';
+// Añadir la importación de la pantalla de inicio
+import 'pantallas/inicio.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Necesario para Firebase
@@ -12,15 +13,14 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    print("✅ Firebase conectado");
+    print("Firebase conectado");
   } catch (e) {
-    print("❌ Error en Firebase: $e");
+    print("Error en Firebase: $e");
   }
 
   runApp(
     ChangeNotifierProvider(
-      create: (_) => ProductosProvider()
-        ..loadProductos(), // Carga los productos al iniciar
+      create: (_) => ProductosProvider(),  // Crear provider sin carga inmediata
       child: const MyApp(),
     ),
   );
@@ -31,10 +31,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Cargar productos después de la construcción inicial
+    Future.microtask(() => 
+      Provider.of<ProductosProvider>(context, listen: false).loadProductos()
+    );
+    
     return MaterialApp(
       title: 'Inventario DAM',
       theme: ThemeData(useMaterial3: true),
-      home: ProductosScreen(), // Pantalla principal
+      home: InicioScreen(), // Cambiar a la pantalla de inicio de sesión
     );
   }
 }
